@@ -1,0 +1,5 @@
+compile both of the code using this two commands
+gcc sender.c -o sender.out -lrt
+gcc receiver.c -o receiver.out -lrt
+
+then run first reciver then sender.
