@@ -21,16 +21,21 @@ void printAllocation(int allocation[100], int process[100], int np)
 void firstFitAllocation(int process[100], int mblocks[100], int np, int nb)
 {
     int allocation[100];
+    int visited[nb];
+    for(int i=0;i<nb;i++){
+        visited[i]=0;
+    }
     int p = 0, flag = 0;
     for (int p = 0; p < np; p++)
     {
         flag = 0;
         for (int b = 0; b < nb; b++)
         {
-            if (process[p] <= mblocks[b])
+            if (process[p] <= mblocks[b] && visited[b]==0)
             {
                 allocation[p] = b;
-                mblocks[b] -= process[p];
+                visited[b]=1;
+                mblocks[b]-= process[p];
                 flag = 1;
                 break;
             }
@@ -47,6 +52,10 @@ void firstFitAllocation(int process[100], int mblocks[100], int np, int nb)
 void bestFitAllocation(int process[100], int mblocks[100], int np, int nb)
 {
     int allocation[100];
+     int visited[nb];
+    for(int i=0;i<nb;i++){
+        visited[i]=0;
+    }
     int fitLoc, flag;
     for (int p = 0; p < np; p++)
     {
@@ -54,7 +63,7 @@ void bestFitAllocation(int process[100], int mblocks[100], int np, int nb)
         flag = 0;
         for (int b = 0; b < nb; b++)
         {
-            if (process[p] <= mblocks[b])
+            if (process[p] <= mblocks[b] && visited[b]==0)
             {
                 if (fitLoc == -1)
                     fitLoc = b;
@@ -69,6 +78,7 @@ void bestFitAllocation(int process[100], int mblocks[100], int np, int nb)
         if (fitLoc != -1)
         {
             mblocks[fitLoc] -= process[p];
+            visited[fitLoc]=1;
         }
     }
 
@@ -76,7 +86,10 @@ void bestFitAllocation(int process[100], int mblocks[100], int np, int nb)
 }
 void worstFitAllocation(int process[100], int mblocks[100], int np, int nb)
 {
-    int allocation[100];
+    int allocation[100],visited[nb];
+     for(int i=0;i<nb;i++){
+        visited[i]=0;
+    }
     int fitLoc, flag;
     for (int p = 0; p < np; p++)
     {
@@ -84,7 +97,7 @@ void worstFitAllocation(int process[100], int mblocks[100], int np, int nb)
         flag = 0;
         for (int b = 0; b < nb; b++)
         {
-            if (process[p] <= mblocks[b])
+            if (process[p] <= mblocks[b] && visited[b]==0)
             {
                 if (fitLoc == -1)
                     fitLoc = b;
@@ -99,6 +112,7 @@ void worstFitAllocation(int process[100], int mblocks[100], int np, int nb)
         if (fitLoc != -1)
         {
             mblocks[fitLoc] -= process[p];
+            visited[fitLoc]=1;
         }
     }
 
